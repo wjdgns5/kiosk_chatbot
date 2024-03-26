@@ -8,8 +8,8 @@ const { default: axios } = require('axios');
 const { Script } = require('vm');
 const bodyParser = require('body-parser');
 var { OpenAIApi, Configuration } = require('openai');
-var client_id_ = '4PzkiRoqnTTMCBZTmsir';
-var client_secret_ = 'Jd7zCaJqSC';
+var client_id_ = '@@';
+var client_secret_ = '@@';
 
 app.get('/first_page', function (req, res){
     // res.sendFile(__dirname + '/html/chat.html');
