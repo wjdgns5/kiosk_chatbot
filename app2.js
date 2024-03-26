@@ -67,8 +67,8 @@ let config = new Configuration({
     res.sendFile(__dirname + '/index.html')
   });
 
-  var client_id = 'iEq9hsgDuBdHPspgeMhg';
-    var client_secret = 'wj1vy1LeKY';
+  var client_id = '@@@';
+    var client_secret = '@@@';
 
     app.get('/translate', function (req, res) {
         var api_url = 'https://openapi.naver.com/v1/papago/n2mt';
