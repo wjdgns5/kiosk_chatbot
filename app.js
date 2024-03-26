@@ -56,7 +56,7 @@ app.use('/public', express.static('public'));
 //-----------------------------------------------
 
 let config = new Configuration({
-    apiKey:'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',
+    apiKey:'OpenAPI Key',
   });
   let openai = new OpenAIApi(config);
 
