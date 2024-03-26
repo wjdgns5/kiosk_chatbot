@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>장바구니</title>
+<style>
+  /* 스타일링을 위한 CSS 코드 */
+  .product-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #ccc;
+    padding: 10px 0;
+  }
+  .product-info {
+    display: flex;
+    align-items: center;
+  }
+  .product-image {
+    width: 100px;
+    height: auto;
+    margin-right: 20px;
+  }
+
+  .menu {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    max-width: 0px; /* 원하는 최대 폭 설정 */
+    margin: 0 auto;
+  }
+
+  .chat-content { height: 300px; overflow-y: scroll;}
+  .line { margin-top: 20px; display: flex;}
+  .chat-box {background: skyblue; padding: 10px; max-width: 400px;}
+  .mine {margin-left: auto;}
+
+  /* 수정된 부분 */
+  .product-info > div {
+    margin-right: 20px;
+  }
+</style>
+
+<script type="module">
+  // 이 부분은 OpenAI API 및 관련 코드입니다.
+</script>
+
+<style>
+    .chat-content { height: 300px; overflow-y: scroll;}
+    .line { margin-top: 40px; display: flex;}
+    .chat-box {background: skyblue; padding: 10px; max-width: 400px;}
+    .mine {margin-left: auto;}
+
+    .total-price {
+    font-size: 16px;
+    margin-left: 1200px;
+  }
+
+  .checkout-button {
+    display: block;
+    width: 100%;
+    padding: 10px;
+    margin-top: 20px;
+    font-size: 18px;
+    text-align: center;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  </style>
+
+  <div class="chat-content">
+    <div class="line">
+      <span class="chat-box">언제든지 답변할 준비가 되어있습니다.</span>
+    </div>
+    <div class="line">
+      <span class="chat-box mine">질문을 해 주세요</span>
+    </div>
+  </div>
+  <input class="chat-box" id="input">
+  <button id="send">전송</button>
+
+  <script type="module">
+    import { Configuration, OpenAIApi } from 'https://cdn.skypack.dev/openai';
+
+    document.querySelector('#send').addEventListener('click', function(){
+      var template = `<div class="line">
+        <span class="chat-box mine">${ document.querySelector('#input').value }</span>
+      </div>`
+      document.querySelector('.chat-content').insertAdjacentHTML('beforeend', template);
+
+      
+
+      const configuration = new Configuration({
+        apiKey: 'OpenAI API Key InPut',
+      });
+      const openai = new OpenAIApi(configuration);
+
+      openai.createCompletion({
+        model: "OpenAI Dvinch Model InPut",
+        prompt: document.querySelector('#input').value,
+        temperature: 0,
+        max_tokens: 100,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+      }).then((result)=>{
+        console.log(result.data.choices[0].text)
+        var template = `<div class="line">
+          <span class="chat-box">${ result.data.choices[0].text }</span>
+        </div>`
+        document.querySelector('.chat-content').insertAdjacentHTML('beforeend', template);
+      })
+
+    })
+  </script>
+
+</head>
+<body>
+<h1>장바구니</h1>
+<div class="product-container">
+  <div class="product-info">
+    <div>
+      <h3>이미지</h3>
+      <p><img class="product-image" src="상품이미지주소" alt="상품 이미지"></p>
+    </div>
+    <div>
+      <h3>상품명</h3>
+      <p>상품명</p>
+    </div>
+    <div>
+      <h3>가격</h3>
+      <p>13,000 </p>
+    </div>
+    <div>
+      <h3>수량</h3>
+      <p>1</p>
+    </div>
+  </div>
+</div>
+
+</div>
+
+<!-- Add more products as needed -->
+
+<p class="total-price">합계: ￦13,000</p>
+
+<button class="checkout-button">결제하기</button>
+</div>
+
+<!-- 추가 상품들은 위의 product-container를 복사하여 붙여넣기 하세요 -->
+
+</body>
+</html>

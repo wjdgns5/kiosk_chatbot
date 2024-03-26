@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>맥도날드 키오스크</title>
+  <style>
+    .menu {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      max-width: 800px; /* 원하는 최대 폭 설정 */
+      margin: 0 auto;
+    }
+
+    <style>
+    .chat-content { height: 300px; overflow-y: scroll;}
+    .line { margin-top: 40px; display: flex;}
+    .chat-box {background: skyblue; padding: 10px; max-width: 400px;}
+    .mine {margin-left: auto;}
+  </style>
+
+  <div class="chat-content">
+    <div class="line">
+      <span class="chat-box">언제든지 답변할 준비가 되어있습니다.</span>
+    </div>
+    <div class="line">
+      <span class="chat-box mine">질문을 해 주세요</span>
+    </div>
+  </div>
+  <input class="chat-box" id="input">
+  <button id="send">전송</button>
+
+  <script type="module">
+    import { Configuration, OpenAIApi } from 'https://cdn.skypack.dev/openai';
+
+    document.querySelector('#send').addEventListener('click', function(){
+      var template = `<div class="line">
+        <span class="chat-box mine">${ document.querySelector('#input').value }</span>
+      </div>`
+      document.querySelector('.chat-content').insertAdjacentHTML('beforeend', template);
+
+      
+
+      const configuration = new Configuration({
+        apiKey: 'OpenAI API Key InPut',
+      });
+      const openai = new OpenAIApi(configuration);
+
+      openai.createCompletion({
+        model: "OpenAI Dvinch Model InPut",
+        prompt: document.querySelector('#input').value,
+        temperature: 0,
+        max_tokens: 100,
+        top_p: 1,
+        frequency_penalty: 0,
+        presence_penalty: 0,
+      }).then((result)=>{
+        console.log(result.data.choices[0].text)
+        var template = `<div class="line">
+          <span class="chat-box">${ result.data.choices[0].text }</span>
+        </div>`
+        document.querySelector('.chat-content').insertAdjacentHTML('beforeend', template);
+      })
+
+    })
+  </script>
+
+<title>맥도날드 키오스크</title>
+<style>
+  .allbox { height: 500px; overflow-y: scroll;}
+  body {
+      font-family: Arial, sans-serif;
+  }
+
+  h1 {
+      text-align: center;
+  }
+
+  .menu-button {
+      display: block;
+      margin: 10px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      width: 200px;
+      text-align: center;
+      text-decoration: none;
+      color: #333;
+  }
+
+  .cart {
+      margin-top: 30px;
+      text-align: center;
+  }
+
+  .cart-item {
+      margin-bottom: 10px;
+  }
+
+  .purchase-button {
+      display: block;
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      border: none;
+      cursor: pointer;
+      width: 200px;
+      text-align: center;
+      text-decoration: none;
+      color: #fff;
+  }
+
+
+    .menu-button {
+      margin: 10px 0;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      background-color: #f9f9f9;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      width: calc(30% - 20px); /* 한 줄에 4개씩 배치하기 위해 너비 조정 */
+      text-align: center;
+      text-decoration: none;
+      color: #333;
+    }
+
+    .cart {
+      margin-top: 30px;
+      text-align: center;
+    }
+
+    .cart-item {
+      margin-bottom: 10px;
+    }
+
+    .purchase-button {
+      margin: 20px auto;
+      padding: 10px 20px;
+      font-size: 16px;
+      border-radius: 5px;
+      background-color: #4CAF50;
+      border: none;
+      cursor: pointer;
+      width: 200px;
+      text-align: center;
+      text-decoration: none;
+      color: #fff;
+    }
+  </style>
+</head>
+<body>
+  <h1>메뉴를 선택하세요:</h1>
+  <div class="menu">
+    <button class="menu-button" onclick="addToCart('빅맥')">빅맥</button>
+    <button class="menu-button" onclick="addToCart('스파이시 불고기')">1955버거</button>
+    <button class="menu-button" onclick="addToCart('에그불고기')">에그불고기</button>
+    <button class="menu-button" onclick="addToCart('쿼터파운더치즈')">쿼터파운더치즈</button>
+    <button class="menu-button" onclick="addToCart('상하이 버거')">맥치킨 버거</button>
+    <button class="menu-button" onclick="addToCart('치즈버거')">슈비버거</button>
+    <button class="menu-button" onclick="addToCart('맥치킨')">맥 크리스피 디럭스 버거 </button>
+    <button class="menu-button" onclick="addToCart('맥치킨')">맥 크리스피 스리차차 마요 </button>
+    <button class="menu-button" onclick="addToCart('맥치킨')">베이컨 토마토 디럭스 </button>
+  </div>
+
+  <div class="cart">
+    <h2>장바구니</h2>
+    <div id="cart-items"></div>
+    <button class="purchase-button" onclick="purchase()">장바구니</button>
+  </div>
+
+  <script>
+    var cartItems = [];
+
+    function addToCart(menu) {
+      cartItems.push(menu);
+      displayCartItems();
+    }
+
+    function displayCartItems() {
+      var cartItemsDiv = document.getElementById("cart-items");
+      cartItemsDiv.innerHTML = "";
+
+      for (var i = 0; i < cartItems.length; i++) {
+        var cartItemDiv = document.createElement("div");
+        cartItemDiv.classList.add("cart-item");
+        cartItemDiv.textContent = cartItems[i];
+        cartItemsDiv.appendChild(cartItemDiv);
+      }
+    }
+
+    function purchase() {
+      if (cartItems.length > 0) {
+        console.log("구매가 완료되었습니다.");
+        cartItems = [];
+        displayCartItems();
+      } else {
+        console.log("장바구니가 비어있습니다.");
+      }
+    }
+  </script>
+</body>
+</html>
